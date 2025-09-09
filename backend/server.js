@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose=require('mongoose');
 const cors = require('cors');
 const dotenv=require('dotenv');
+const path = require('path');
 const todoRouters = require('./routes/todoRoutes.js');
 
 
@@ -10,8 +11,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/todos', todoRouters);
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve frontend
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
+});
 
 mongoose.connect(process.env.mongodb).then(() => {
   console.log("MongoDB connected");
