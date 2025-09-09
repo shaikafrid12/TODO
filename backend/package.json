@@ -2,6 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shaikafrid12/TODO.git"
+  },
   "main": "index.js",
   "scripts": {
     "start": "node server.js",

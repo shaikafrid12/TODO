@@ -2,6 +2,10 @@
   "name": "todo-app",
   "version": "1.0.0",
   "description": "A simple TODO application",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shaikafrid12/TODO.git"
+  },
   "main": "backend/server.js",
   "scripts": {
     "install": "cd backend && npm install && cd ../frontend && npm install",
