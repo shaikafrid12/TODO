@@ -30,8 +30,9 @@ router.delete("/:id",async(req,res)=>{
 });
 
 router.delete("/",async(req,res)=>{
-    await Todo.deleteMany({});
-    res.json({message:"All todos deleted"});
+    await Todo.deleteMany({completed: true});
+    const todos = await Todo.find();
+    res.json(todos);
 });
 
 

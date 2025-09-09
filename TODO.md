@@ -1,0 +1,5 @@
+- [x] Add error handling to async functions in App.jsx
+- [x] Set VITE_API_URL for production if deploying
+- [x] Run backend server if not running
+- [x] Test the app
+- [x] Fix clearCompleted to delete only completed todos

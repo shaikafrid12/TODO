@@ -7,26 +7,51 @@ function App() {
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState("");
   const [filter, setFilter] = useState("all");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    API.get("/").then(res => setTodos(res.data));
+    const fetchTodos = async () => {
+      try {
+        const res = await API.get("/");
+        setTodos(res.data);
+      } catch (err) {
+        console.error("Error fetching todos:", err);
+        setError("Failed to load todos. Please check if the backend is running.");
+      }
+    };
+    fetchTodos();
   }, []);
 
   const addTodo = async () => {
     if (!text) return;
-    const res = await API.post("/", { text });
-    setTodos([...todos, res.data]);
-    setText("");
+    try {
+      const res = await API.post("/", { text });
+      setTodos([...todos, res.data]);
+      setText("");
+    } catch (err) {
+      console.error("Error adding todo:", err);
+      setError("Failed to add todo.");
+    }
   };
 
   const toggleTodo = async (id, completed) => {
-    const res = await API.put(`/${id}`, { completed: !completed });
-    setTodos(todos.map(t => (t._id === id ? res.data : t)));
+    try {
+      const res = await API.put(`/${id}`, { completed: !completed });
+      setTodos(todos.map(t => (t._id === id ? res.data : t)));
+    } catch (err) {
+      console.error("Error toggling todo:", err);
+      setError("Failed to update todo.");
+    }
   };
 
   const deleteTodo = async (id) => {
-    await API.delete(`/${id}`);
-    setTodos(todos.filter(t => t._id !== id));
+    try {
+      await API.delete(`/${id}`);
+      setTodos(todos.filter(t => t._id !== id));
+    } catch (err) {
+      console.error("Error deleting todo:", err);
+      setError("Failed to delete todo.");
+    }
   };
 
   const startEdit = (id, currentText) => {
@@ -35,16 +60,26 @@ function App() {
   };
 
   const saveEdit = async (id) => {
-    const res = await API.put(`/${id}`, { text: editText });
-    setTodos(todos.map(t => (t._id === id ? res.data : t)));
-    setEditingId(null);
-    setEditText("");
+    try {
+      const res = await API.put(`/${id}`, { text: editText });
+      setTodos(todos.map(t => (t._id === id ? res.data : t)));
+      setEditingId(null);
+      setEditText("");
+    } catch (err) {
+      console.error("Error saving edit:", err);
+      setError("Failed to save edit.");
+    }
   };
 
   // Clear all completed
   const clearCompleted = async () => {
-    await API.delete("/");
-    setTodos(todos.filter(t => !t.completed));
+    try {
+      const res = await API.delete("/");
+      setTodos(res.data);
+    } catch (err) {
+      console.error("Error clearing completed todos:", err);
+      setError("Failed to clear completed todos.");
+    }
   };
 
   // Apply filter
@@ -58,6 +93,7 @@ function App() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-red-600 p-4 sm:p-6 md:p-8">
       <div className="bg-indigo-200 shadow-xl rounded-2xl p-4 sm:p-6 md:p-8 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
         <h1 className="text-xl sm:text-2xl font-bold text-center text-gray-800 mb-4 sm:mb-6">📝 To-Do App</h1>
+        {error && <div className="text-red-500 text-center mb-4">{error}</div>}
           <div className="flex mb-3 sm:mb-4">
             <input
             value={text}
