@@ -19,6 +19,11 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use('/api/todos', todoRouters);
+
+// Add root route to avoid 404 on backend root URL
+app.get('/', (req, res) => {
+  res.send('Backend API is running');
+});
 app.use(express.urlencoded({ extended: true }));
 
 // Serve frontend
