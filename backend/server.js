@@ -9,7 +9,11 @@ const todoRouters = require('./routes/todoRoutes.js');
 dotenv.config();
 const app = express();
 app.use(cors({
-  origin: ['https://todo-igvs.onrender.com', 'http://localhost:3000', 'http://localhost:5173',], 
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://todo-frontend-aoyx.onrender.com'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
