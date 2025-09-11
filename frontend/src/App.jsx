@@ -13,7 +13,8 @@ function App() {
     const fetchTodos = async () => {
       try {
         const res = await API.get("/");
-        setTodos(res.data);
+        const data = Array.isArray(res.data) ? res.data : [];
+        setTodos(data);
       } catch (err) {
         console.error("Error fetching todos:", err);
         setError("Failed to load todos. Please check if the backend is running.");
@@ -75,7 +76,8 @@ function App() {
   const clearCompleted = async () => {
     try {
       const res = await API.delete("/");
-      setTodos(res.data);
+      const data = Array.isArray(res.data) ? res.data : [];
+      setTodos(data);
     } catch (err) {
       console.error("Error clearing completed todos:", err);
       setError("Failed to clear completed todos.");
