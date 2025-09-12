@@ -1,14 +1,16 @@
 services:
   - type: web
-    name: todo-backend
+    name: todo-app
     env: node
     plan: free
-    buildCommand: npm install && npm run build-backend && npm run build-frontend
+    buildCommand: npm install && npm run build
     startCommand: node backend/server.js
     envVars:
-      - key: PORT
-        value: 5000
-      - key: NODE_VERSION
-        value: 20
-      - key: NPM_VERSION
-        value: 10
+      - key: mongodb
+        fromDatabase:
+          name: todo-db
+          property: connectionString
+
+databases:
+  - name: todo-db
+    plan: free
