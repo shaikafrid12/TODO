@@ -10,7 +10,3 @@ services:
         fromDatabase:
           name: todo-db
           property: connectionString
-
-databases:
-  - name: todo-db
-    plan: free
