@@ -11,7 +11,11 @@ const app = express();
 
 // Allow all origins for CORS. For a production application, you should
 // restrict this to the specific URL of your frontend.
-app.use(cors());
+app.use(cors({
+  origin: "https://todo-qfl7.onrender.com",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"],
+}));
 
 app.use(express.json());
 app.use('/api/todos', todoRouters);
