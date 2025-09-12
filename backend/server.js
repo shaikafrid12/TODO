@@ -41,7 +41,7 @@ mongoose.connect(process.env.mongodb || 'mongodb://127.0.0.1:27017/todo').then((
 
 
 
- const port =process.env.PORT || 5000;
+const port = 5000;
  app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
     console.log(`http://localhost:${port}`);
