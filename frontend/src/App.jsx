@@ -16,7 +16,7 @@ function App() {
         const data = Array.isArray(res.data) ? res.data : [];
         setTodos(data);
       } catch (err) {
-       
+        console.error("Error fetching todos:", err);
         setError("Failed to load todos. Please check if the backend is running.");
       }
     };
