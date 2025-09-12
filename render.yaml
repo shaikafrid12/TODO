@@ -3,7 +3,7 @@ services:
     name: todo-backend
     env: node
     plan: free
-    buildCommand: npm install && cd frontend && npm install && VITE_API_URL=https://todo-backend-u4nm.onrender.com/api/todos npm run build && cd .. && cp -r frontend/dist backend/frontend-dist
+    buildCommand: npm install && npm run build-backend && npm run build-frontend
     startCommand: node backend/server.js
     envVars:
       - key: PORT
@@ -12,4 +12,3 @@ services:
         value: 20
       - key: NPM_VERSION
         value: 10
-c
