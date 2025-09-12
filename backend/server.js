@@ -12,7 +12,7 @@ const app = express();
 // Allow all origins for CORS. For a production application, you should
 // restrict this to the specific URL of your frontend.
 app.use(cors({
-  origin: "https://todo-qfl7.onrender.com",
+  origin: ["https://todo-backend-v0pw.onrender.com", "http://localhost:5173"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type"],
 }));
@@ -33,7 +33,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'dist', 'index.html'));
 });
 
-mongoose.connect(process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/todo').then(() => {
+mongoose.connect(process.env.mongodb || 'mongodb://127.0.0.1:27017/todo').then(() => {
   console.log("MongoDB connected");
 }).catch((err) => {
   console.error("MongoDB connection error:", err);
