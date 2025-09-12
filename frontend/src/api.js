@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "/api/todos",
+  baseURL: "https://todo-backend-v0pw.onrender.com/api/todos",
 })
 
 export default API;
