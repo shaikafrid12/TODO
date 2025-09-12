@@ -12,7 +12,7 @@ const app = express();
 // Allow all origins for CORS. For a production application, you should
 // restrict this to the specific URL of your frontend.
 app.use(cors({
-  origin: ["https://todo-backend-v0pw.onrender.com", "http://localhost:5173"],
+  origin: ["https://todo-qfl7.onrender.com", "http://localhost:5173"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type"],
 }));
