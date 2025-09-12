@@ -8,15 +8,11 @@ const todoRouters = require('./routes/todoRoutes.js');
 
 dotenv.config();
 const app = express();
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'https://todo-frontend-aoyx.onrender.com'
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+
+// Allow all origins for CORS. For a production application, you should
+// restrict this to the specific URL of your frontend.
+app.use(cors());
+
 app.use(express.json());
 app.use('/api/todos', todoRouters);
 
@@ -27,13 +23,13 @@ app.get('/', (req, res) => {
 app.use(express.urlencoded({ extended: true }));
 
 // Serve frontend
-app.use(express.static(path.join(__dirname, 'frontend-dist')));
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'dist')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend-dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'dist', 'index.html'));
 });
 
-mongoose.connect(process.env.mongodb || 'mongodb://127.0.0.1:27017/todo').then(() => {
+mongoose.connect(process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/todo').then(() => {
   console.log("MongoDB connected");
 }).catch((err) => {
   console.error("MongoDB connection error:", err);
@@ -41,8 +37,8 @@ mongoose.connect(process.env.mongodb || 'mongodb://127.0.0.1:27017/todo').then((
 
 
 
-const port = 5000;
- app.listen(port,()=>{
+const port = process.env.PORT || 5000;
+ app.listen(port,()=> {
     console.log(`Server is running on port ${port}`);
     console.log(`http://localhost:${port}`);
  });
