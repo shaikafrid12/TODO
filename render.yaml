@@ -1,16 +1,14 @@
 services:
   - type: web
-    name: todo-app
+    name: todo-backend
     env: node
     plan: free
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && cd frontend && npm install && VITE_API_URL=https://todo-backend-u4nm.onrender.com/api/todos npm run build && cd .. && npx cpx "frontend/dist/**/*" "backend/frontend-dist" --clean
     startCommand: node backend/server.js
     envVars:
-      - key: mongodb
-        fromDatabase:
-          name: todo-db
-          property: connectionString
-
-databases:
-  - name: todo-db
-    plan: free
+      - key: PORT
+        value: 5000
+      - key: NODE_VERSION
+        value: 20
+      - key: NPM_VERSION
+        value: 10
